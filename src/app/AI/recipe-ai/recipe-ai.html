@@ -1,0 +1,51 @@
+<!-- snack-tip.component.html -->
+<div *ngIf="showTip" class="snack-tip-box">
+🥗 Note: If you're hungry right now, try a quick snack like yogurt, fruit, or a handful of nuts ✨
+</div>
+<div class="api-interaction-container">
+  <h2>Recipe Finder</h2>
+
+  <div class="search-filter-section">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search recipes (e.g. Italian, Chicken)..."
+      (keyup.enter)="searchRecipes()" class="search-input" />
+    <button (click)="searchRecipes()" class="btn-primary">Search</button>
+    <button (click)="getAiRecommendations()" class="btn-secondary">Get AI Recommendations</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-msg">Loading recipes...</div>
+  <div *ngIf="aiLoading" class="loading-msg">Getting AI recommendations...</div>
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <!-- AI Recommendations Section -->
+  <div class="ai-recommendations" *ngIf="showAiRecommendations && aiRecommendations.length > 0">
+    <h3>AI Recipe Suggestions</h3>
+    <ul>
+      <li *ngFor="let rec of aiRecommendations" class="ai-recommendation-item">
+        {{ rec }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="recipes-results" *ngIf="recipes.length > 0">
+    <h3>Results ({{ recipes.length }})</h3>
+    <ul>
+      <li *ngFor="let recipe of recipes" class="recipe-item">
+        <img [src]="recipe.image || 'assets/default-image.jpg'" alt="{{ recipe.name }}" />
+        <div>
+          <h4>{{ recipe.name }}</h4>
+          <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
+          <p *ngIf="recipe.difficulty"><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+          <p *ngIf="recipe.prepTimeMinutes !== undefined"><strong>Prep Time:</strong> {{ recipe.prepTimeMinutes }} mins
+          </p>
+          <p *ngIf="recipe.ingredients && recipe.ingredients.length > 0">
+            <strong>Ingredients:</strong> {{ recipe.ingredients.join(', ') }}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="recipes.length === 0 && !loading && !errorMessage" class="no-results">
+    No recipes found for "{{ searchQuery }}"
+  </div>
+</div>

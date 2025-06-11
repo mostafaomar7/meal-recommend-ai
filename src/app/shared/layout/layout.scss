@@ -1,0 +1,20 @@
+/* Layout component styles */
+.main-content {
+  padding-top: 80px; /* Space for fixed navbar */
+  min-height: calc(100vh - 80px);
+  background-color: var(--secondary-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 120px; /* More space for responsive navbar */
+  }
+}
+

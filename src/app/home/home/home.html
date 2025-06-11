@@ -1,0 +1,65 @@
+<div class="home-container">
+  <div class="hero-section">
+    <h1>Welcome to Tasbeera</h1>
+    <p class="subtitle">Discover delicious recipes and plan your meals</p>
+  </div>
+
+  <div class="featured-recipes">
+    <h2>Recently Added Recipes</h2>
+    <div class="recipe-grid" >
+      <!-- Placeholder for recipe cards -->
+      <div class="recipe-card" *ngFor="let meal of meals">
+          <div class="recipe-image placeholder">
+            <img src="{{ meal.image }}" alt="{{ meal.name }}" />
+            <div class="recipe-difficulty" [ngClass]="meal.difficulty.toLowerCase()">
+              {{ meal.difficulty }}
+            </div>
+          </div>
+          <div class="recipe-content">
+        <h3>{{ meal.name }}</h3>
+        <p class="recipe-description">{{ meal.ingredients.join(', ') }}</p>
+        <div class="recipe-meta">
+          <span><i class="fas fa-clock"></i> {{ meal.prepTimeMinutes }} mins</span>
+          <span><i class="fas fa-utensils"></i> {{ meal.servings }} servings</span>
+        </div>
+        <div class="recipe-tags">
+          <span class="recipe-category">{{ meal.mealType.join(', ') }}</span>
+          <span class="recipe-cuisine">{{ meal.cuisine }}</span>
+        </div>
+      </div>
+      
+    </div>
+      
+      
+      
+    </div>
+  </div>
+  
+  <div class="about-section">
+    <h2>About Us</h2>
+    <p>Tasbeera is your go-to platform for discovering and sharing delicious recipes. Whether you're a seasoned chef or a cooking enthusiast, our community-driven recipe collection has something for everyone.</p>
+    <p>Create an account to save your favorite recipes, plan your meals, and get personalized recommendations based on your preferences.</p>
+  </div>
+  
+  <div class="contact-section">
+    <h2>Contact Us</h2>
+    <p>Have questions or suggestions? We'd love to hear from you!</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <span>info&#64;tasbeera.com</span>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <span>+1 (123) 456-7890</span>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Tasbeera. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+

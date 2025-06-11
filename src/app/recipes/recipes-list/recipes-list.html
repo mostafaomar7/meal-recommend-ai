@@ -1,0 +1,140 @@
+<div class="recipes-container">
+  <div class="recipes-header">
+    <h1>Explore Meals</h1>
+    <p class="subtitle">Discover delicious meals from around the world</p>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search meals..."
+        class="search-input"
+        (keyup.enter)="onSearch()"
+      />
+      <button class="search-btn" (click)="onSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <div class="filter-controls">
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select
+          id="category"
+          [(ngModel)]="selectedCategory"
+          (change)="onCategoryChange()"
+          class="filter-select"
+        >
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="cuisine">Country:</label>
+        <select
+          id="cuisine"
+          [(ngModel)]="selectedCuisine"
+          (change)="onCuisineChange()"
+          class="filter-select"
+        >
+          <option value="">All Countries</option>
+          <option *ngFor="let cuisine of cuisines" [value]="cuisine">
+            {{ cuisine }}
+          </option>
+        </select>
+      </div>
+
+      <button class="clear-btn" (click)="clearFilters()">Clear Filters</button>
+    </div>
+  </div>
+
+  <div class="recipes-grid">
+    <div class="recipe-card" *ngFor="let meal of filteredMeals">
+      <div class="recipe-image placeholder">
+        <img [src]="meal.strMealThumb" alt="{{ meal.strMeal }}" width="200" />
+      </div>
+      <div class="recipe-content">
+        <h3>{{ meal.strMeal }}</h3>
+        <p class="recipe-description">{{ meal.strCategory }}</p>
+        <div class="recipe-meta">
+          <span><i class="fas fa-globe"></i> {{ meal.strArea }}</span>
+        </div>
+        <p>
+          {{ meal.strInstructions | slice: 0:150 }}...
+        </p>
+        <div class="recipe-tags mt-3">
+          <a href="javascript:void(0)" (click)="openVideo(meal.strYoutube)">
+            <span class="recipe-cuisine">Watch Video ▶</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-recipes" *ngIf="filteredMeals.length === 0">
+    <p>No meals match your filters. Try adjusting your search criteria.</p>
+    <button class="clear-btn" (click)="clearFilters()">Clear Filters</button>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === 1"
+      (click)="prevPage()"
+    >
+      <i class="fas fa-chevron-left"></i> Previous
+    </button>
+
+    <div class="pagination-pages">
+      <button
+        *ngFor="let page of getPageNumbers()"
+        class="page-number"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+    </div>
+
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === totalPages"
+      (click)="nextPage()"
+    >
+      Next <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div class="video-overlay" *ngIf="selectedVideoUrl">
+    <div class="video-container">
+      <button class="close-button" (click)="closeVideo()">✖</button>
+
+      <div class="video-loading" *ngIf="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <iframe
+        width="100%"
+        height="100%"
+        [src]="selectedVideoUrl | safe"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        (load)="loading = false"
+      ></iframe>
+
+      <a
+        class="watch-link"
+        [href]="selectedVideoUrl.replace('embed/', 'watch?v=')"
+        target="_blank"
+      >
+        مشاهدة على يوتيوب 🔗
+      </a>
+    </div>
+  </div>
+</div>

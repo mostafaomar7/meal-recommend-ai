@@ -1,0 +1,45 @@
+<!-- snack-tip.component.html -->
+<div *ngIf="showTip" class="snack-tip-box">
+🥗 Note: If you're hungry right now, try a quick snack like yogurt, fruit, or a handful of nuts ✨
+</div>
+
+<div class="search-container">
+  <h2>Find Your Perfect Recipe</h2>
+  <div class="input-group">
+    <input
+      type="text"
+      [ngModel]="userQuery()"
+      (ngModelChange)="userQuery.set($event)"
+      (keyup.enter)="onSearch()"
+      placeholder="e.g., 'easy italian dinner' or 'spicy chicken meal'"
+    />
+    <button (click)="onSearch()" [disabled]="isLoading()">
+      {{ isLoading() ? 'Searching...' : 'Find Recipe' }}
+    </button>
+  </div>
+</div>
+
+<div class="results-container">
+  @if (isLoading()) {
+    <div class="spinner">Loading...</div> }
+
+  @if (error()) {
+    <div class="error-message">{{ error() }}</div>
+  }
+
+  <div class="card-grid">
+  @for (recipe of recommendedRecipes(); track recipe.id) {
+    <div class="recipe-card">
+      <img [src]="recipe.image" [alt]="recipe.name" class="recipe-image" />
+      <div class="card-content">
+        <h3>{{ recipe.name }}</h3>
+        <p class="cuisine">From: {{ recipe.source }} | Cuisine: {{ recipe.cuisine }}</p>
+        
+        @if(recipe.tags && recipe.tags.length > 0) {
+          <p><strong>Tags:</strong> {{ recipe.tags.join(', ') }}</p>
+        }
+      </div>
+    </div>
+  }
+</div>
+</div>

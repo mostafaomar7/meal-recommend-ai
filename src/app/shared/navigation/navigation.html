@@ -1,0 +1,65 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar-brand">
+      <a routerLink="/home" class="brand-name">Tasbeera</a>
+      <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="navbar-menu" [class.open]="isMenuOpen">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/recipes" routerLinkActive="active" class="nav-link">Recipes</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/meals" routerLinkActive="active" class="nav-link">New Recipe</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/recommend" routerLinkActive="active" class="nav-link">Recommend Recipe</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/localrecommend" routerLinkActive="active" class="nav-link">API Recommend</a>
+        </li>
+      </ul>
+      <div class="navbar-actions">
+      <button class="btn-icon search-btn" (click)="toggleSearch()">
+        <i class="fas fa-search"></i>
+      </button>
+      <div *ngIf="isLoggedIn" class="user-info">
+        <span class="user-name">Welcome, {{ userName }}</span>
+        <button class="btn-icon signout-btn" (click)="signOut()">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+      <div *ngIf="!isLoggedIn" class="auth-buttons">
+        <a routerLink="/login" class="btn btn-outline">Login</a>
+        <a routerLink="/register" class="btn">Register</a>
+      </div>
+    </div>
+    </div>
+
+    
+  </div>
+
+  <!-- Search overlay -->
+  <div class="search-overlay" *ngIf="showSearch">
+    <div class="container">
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search recipes..."
+          (keyup.enter)="searchRecipes(searchInput.value)"
+          #searchInput
+        />
+        <button class="btn-icon close-search-btn" (click)="toggleSearch()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
